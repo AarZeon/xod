@@ -9,23 +9,41 @@ module Value = {
     | Number(float)
     | Boolean(bool)
     | String(string)
+    | Byte(int)
     | Invalid(string);
   let numberRegex = [%re {|/^[+-]?(?=.)*\d*(?:\.\d+)?$/|}];
   let stringRegex = [%re {|/^".*"$/|}];
+  let byteRegex = [%re {|/^[0-9a-f]{2}h|[0,1]{8}b|\d{1,3}d$/i|}];
   let unquote = str =>
     str
     |> Js.String.replaceByRe([%re "/^\"/"], "")
     |> Js.String.replaceByRe([%re "/\"$/"], "");
+  let _init = (str: string) : string =>
+    String.sub(str, 0, String.length(str) - 1);
+  let _byteStringToInt = str =>
+    switch (str) {
+    | bin when Re.test(bin, [%re {|/b$/|}]) =>
+      "0b" ++ _init(bin) |. int_of_string |. (x => Byte(x))
+    | hex when Re.test(hex, [%re {|/h$/|}]) =>
+      "0x" ++ _init(hex) |. int_of_string |. (x => Byte(x))
+    | dec when Re.test(dec, [%re {|/d$/|}]) =>
+      _init(dec) |. int_of_string |. (x => Byte(x))
+    | x => Invalid(x)
+    };
   let parse = str =>
     switch (str) {
     | "" => Empty
-    | "true" => Boolean(true)
-    | "false" => Boolean(false)
+    | "true"
+    | "True" => Boolean(true)
+    | "false"
+    | "False" => Boolean(false)
     | "NaN" => NaN
     | numString when Re.test(numString, numberRegex) =>
       Number(Js.Float.fromString(numString))
     | quotedString when Re.test(quotedString, stringRegex) =>
       String(unquote(quotedString))
+    | byteString when Re.test(byteString, byteRegex) =>
+      _byteStringToInt(byteString)
     | x => Invalid(x)
     };
 };

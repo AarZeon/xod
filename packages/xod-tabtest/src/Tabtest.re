@@ -31,6 +31,7 @@ module Probe = {
       | Pulse => "pulse"
       | Boolean => "boolean"
       | Number => "number"
+      | Byte => "byte"
       | String => "string"
       }
     );
@@ -170,6 +171,7 @@ module TestCase = {
     | Boolean(true) => "true"
     | Boolean(false) => "false"
     | NaN => "NAN"
+    | Byte(x) => string_of_int(x)
     | String(x) => Cpp.enquote(x)
     | x => {j|$x|j}
     };
