@@ -33,8 +33,8 @@ Pins, Inputs, und Outputs
 Nodes alleine sind Black Boxen. Sie weisen *Pins* auf um Interactionen zu unterstützen. Stelle dir vor das Pins eine
 Art von Steckdosen und Anschlüsse für diverse Geräte
 
-Ein Pin kan zugleich ein *Input* oder ein *Output* sein. Dann wenn du einen neuen Wert in den Input gibst,
-, wird die Node Ausgewertet. Als Antwort, als Folge könnte die Node die Outputs aktualiseren oder interagiert mit der realen Welt
+Ein Pin kann zugleich ein *Eingang* oder ein *Ausgang* sein. Wenn man einen neuen Wert in den Eingang einträgt,
+wird die Node ausgewertet. Als Antwort, somit als Folge könnte die Node die Outputs aktualiseren oder interagiert mit der realen Welt
 in einer Art und Weise, wie zum Beispiel das Ändern der Motoren Geschwindigkeit.
 
 Einige Nodes senden einen eigenen Output als Reaktion zu einem externen Event.
@@ -48,13 +48,13 @@ und die Outputs befinden sich unterhalb.
 Links und Werte
 ----------------
 
-Nodes talk to each other by transmitting values over *links*. A link is a kind
-of wire that you use to connect one node's output to another node's input.
+Nodes kommunizieren miteinander mit Werten die über *links* transferiert werden. Ein Link ist eien Art von Kabel,
+mit diesem du auch den Ausgang einer Node mit einem Eingang einer anderen Node verknüpfst.
 
-Values in XOD are quite similar to electric signals. However unlike their
-electric counterparts, they can carry not only raw voltage values, but also
-more sensible data like arbitrary numbers and text strings. Learn more about
-values in the [Data Types](../data-types/) article.
+Werte in XOD sind sehr ännlich zu elektrischen Signale. Jedoch anders als 
+die elektrischen Signale, können diese nicht nur rohe Volt Werte übertragen,
+sondern auch sensiblere Daten wie zum Beispiel beliebige Zahlen und Textzeichenfolge
+ Lerne mehr über Werte im [Data Types](../data-types/) Artikel.
 
 In analog electronic circuits voltage levels change continuously and
 simultaneously at all points. There is no such thing as “this chip would think
