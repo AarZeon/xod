@@ -1,0 +1,104 @@
+---
+title: Programm Struktur
+---
+
+Programm Struktur
+=================
+
+XOD Programme sind ziemhlich änhlich zu elektronischen Schaltkreisen. Um ein Elektronischen Schaltkreis zu bauen, benutzt du verschiedene elektrische Komponenten und verbindest sie
+mit Kabeln. In einem XOD Program, brauchst du *nodes* und verbindest sie mit *links*.
+
+![Example patch](./example.patch.png)
+
+Nodes
+-----
+
+Was eine "Node" ist kommt es darauf an was für ein Typ dieser ist. So wie es in der physischen Welt ICs gibt,
+um Motoren zu steuern, Audiosignale zu verstärken und Daten zu speichern, gibt es in XOD viele Arten von Nodes
+Du kannst auch ganz einfach deinen eignen Node erstellen.
+
+Einige Nodes representieren Physikalische Geräte wie zum Beispiel LEDs oder ein digitales Thermometer. Andere
+können auch Daten filtern und transformieren. Hier sind einige Beispiele:
+
+* [`thermometer-tmp36`](/libs/xod/common-hardware/thermometer-tmp36/)
+* [`console-log`](/libs/xod/core/console-log/)
+* [`add`](/libs/xod/core/add/)
+* [`to-percent`](/libs/xod/core/to-percent/)
+
+Du plazierst die Nodes, welche du ausgewählt hast für dein Programm in ein Slot, um später mit Links verbunden zu werden.
+
+Pins, Inputs, und Outputs
+-------------------------
+
+Nodes alleine sind Black Boxen. Sie weisen *Pins* auf um Interactionen zu unterstützen. Stelle dir vor das Pins eine
+Art von Steckdosen und Anschlüsse für diverse Geräte
+
+Ein Pin kan zugleich ein *Input* oder ein *Output* sein. Dann wenn du einen neuen Wert in den Input gibst,
+, wird die Node Ausgewertet. Als Antwort, als Folge könnte die Node die Outputs aktualiseren oder interagiert mit der realen Welt
+in einer Art und Weise, wie zum Beispiel das Ändern der Motoren Geschwindigkeit.
+
+Einige Nodes senden einen eigenen Output als Reaktion zu einem externen Event.
+Zum Beispiel, die [clock](/libs/xod/core/clock/) Node sendet Output-Signale in einem regulerem Zeit interval.
+
+Pins werden als Löcher mit kurzen Labes dargestellt. Die Inputs werden oberhalb der Nodes platziert,
+und die Outputs befinden sich unterhalb. 
+
+![Nodes inputs and outputs](./nodes-inputs-outputs.png)
+
+Links und Werte
+----------------
+
+Nodes talk to each other by transmitting values over *links*. A link is a kind
+of wire that you use to connect one node's output to another node's input.
+
+Values in XOD are quite similar to electric signals. However unlike their
+electric counterparts, they can carry not only raw voltage values, but also
+more sensible data like arbitrary numbers and text strings. Learn more about
+values in the [Data Types](../data-types/) article.
+
+In analog electronic circuits voltage levels change continuously and
+simultaneously at all points. There is no such thing as “this chip would think
+first, than another chip would think”. In digital electronics however many
+updates are accompanied with discrete pulses which are sourced by a
+microcontroller and called clock signals.
+
+Values behave very similarly in XOD. They change and propogate instantly. These
+cascading value updates are called *transactions*. In XOD, the role of clock
+signals is played by *pulses*. The [Execution Model](../execution-model/)
+article describes how they work in detail.
+
+There are a few rules that define which pins are allowed to be linked and which
+are not. They are intuitive enough, but for a formal description see [Linking
+Rules](../linking-rules/).
+
+Patches
+-------
+
+Nodes linked together form a *patch*. Patches are like modules, documents, or
+files in other programming systems.
+
+You would have a single patch in a simple project, while you’d likely have
+many for complex projects.
+
+What makes a patch interesting is that once you’ve created one you can use it
+as a new type of node in other patches! That’s the main idea behind XOD
+extensibility.
+
+You use special *terminal nodes* to denote input and output pins when a patch
+is used as a node.
+
+<div class="ui segment">
+  <span class="ui bottom attached label">
+    Photo by
+    <a href="https://www.flickr.com/photos/26735065@N00/">cutwithflourish</a>.
+  </span>
+  <p>
+  <span class="ui blue ribbon label">Note</span>
+    Perhaps you’ve heard of modular synthesizers - they are very similar to XOD
+    programs. Nodes are modules, links are CV cables with banana connectors,
+    and patches are a rack chassis for modules.
+  </p>
+  <div class="ui fluid image">
+    <img src="modular-synth.jpg" alt="Modular synth" />
+  </div>
+</div>
